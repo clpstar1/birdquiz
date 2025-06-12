@@ -1,0 +1,12 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button {
+  border: 1px solid blue;
+  background: aliceblue;
+  padding: 8px;
+}
