@@ -1,5 +1,5 @@
 // TODO Insert all the burds 
-var burds = [
+const _burds = [
   "gartenvögel/zilpzalp.mp3",
   "gartenvögel/haubenmeise.mp3",
   "gartenvögel/mehlschwalbe.mp3",
@@ -51,67 +51,36 @@ var burds = [
   "gartenvögel/mönchsgrasmücke.mp3",
   "gartenvögel/feldsperling.mp3",
 ]
+var burds = [..._burds]
 
-var poppedBurds: string[] = []
-
-// 50 -> 
-//
-const popRandomBird = () => {
-  const burd = _popRandomBird()
-  console.log(burds)
-  return burd
+const refreshCounter = (remaining: number) => {
+  document.getElementById("counter")!.innerText = `Remaining: ${remaining}`
 }
 
-const _popRandomBird = () => {
+const popRandomBird = () => {
   if (burds.length === 0) {
     return null
   }
-
-  if (burds.length === 1) {
-    burds = []
-    return burds[0]
-  }
   // return a random index between 0 (inclusive) and burds.length (exclusive)
   const popPosition = Math.floor(Math.random() * burds.length)
-  return burds.splice(popPosition, 1)[0]
-}
-
-const mkStartPage = (reset: boolean = false) => {
-  const content = document.getElementById("content")!
-  content.innerHTML = `
-    <div class="center" id="#startPage">
-      <h1>Welcome to Birdjizz</h1>
-      <div class="button" id="startButton">
-        Start Quiz???
-      </div>
-    </div>
-  `
-  if (reset) {
-    burds = poppedBurds
-    poppedBurds = []
-  }
-
-  const startButton = document.getElementById("startButton")!
-  const randomBird = popRandomBird()
-  startButton.addEventListener(
-    "click",
-    () => randomBird === null
-      ? mkStartPage()
-      : mkBirdPage(randomBird))
+  const popped = burds.splice(popPosition, 1)[0]
+  return popped
 }
 
 const mkBirdPage = (birdsrc: string) => {
   const content = document.getElementById("content")!
-  console.log(birdsrc)
   content.innerHTML = `
-    <div class="center">
+    <div class="center-col">
       <h2>Guesseth the Bird</h2>
       <audio controls>
         <source src=${birdsrc}>
       </audio>
-      <div class="button" id="revealButton">Reveal</div>
+      <div class="button" id="revealButton" style="margin-top: 1em">
+        Reveal
+      </div>
     </div>
   `
+  refreshCounter(burds.length + 1)
   const revealButton = document.getElementById("revealButton")!
   revealButton.addEventListener("click", () => mkRevealPage(birdsrc))
 }
@@ -119,25 +88,30 @@ const mkBirdPage = (birdsrc: string) => {
 const mkRevealPage = (whodunnit: string) => {
   const content = document.getElementById("content")!
   content.innerHTML = `
-    <div class="center">
-      <h2>It was ${whodunnit}!</h2>
+    <div class="center-col">
+      <h2>It was ${whodunnit.split("/")[1]}!</h2>
       <div style="display: flex">
-        <div class="button" id="continueButton">Continue</div>
-        <div class="button" id="reshuffleButton">Continue and Reshuffle</div>
+        <div class="button" id="continueButton">
+          Continue
+        </div>
+        <div class="button" id="reshuffleButton">
+          Continue and Reshuffle
+        </div>
       </div>
     </div>
   `
   const onclick = (prevBird: string | null = null) => {
 
+    // insert at random position
     if (prevBird !== null) {
-      const insertPosition = (Math.random() * 100000) % burds.length
-      burds.splice(insertPosition, 0, prevBird)
+      const insertPos = Math.floor(Math.random() * burds.length)
+      burds.splice(insertPos, 0, prevBird)
     }
 
     const randomBird = popRandomBird()
-    // TODO prevent showing the reshuffled bird?
+
     randomBird === null
-      ? mkStartPage(true)
+      ? mkFinishPage()
       : mkBirdPage(randomBird)
   }
 
@@ -147,7 +121,27 @@ const mkRevealPage = (whodunnit: string) => {
   document
     .getElementById("reshuffleButton")!
     .addEventListener("click", () => onclick(whodunnit))
-
 }
 
-mkStartPage()
+const mkFinishPage = () => {
+  const content = document.getElementById("content")!
+  content.innerHTML = `
+    <div class="center-col">
+      <h2>Yippee you are done</h2>
+      <div class="button" id="resetButton">
+        Reset?
+      </div>
+    </div>
+  `
+  refreshCounter(burds.length)
+
+  document
+    .getElementById("resetButton")!
+    .addEventListener("click", () => {
+      burds = [..._burds]
+      mkBirdPage(popRandomBird()!)
+    })
+}
+
+mkBirdPage(popRandomBird()!)
+refreshCounter(burds.length + 1)
