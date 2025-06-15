@@ -35,7 +35,10 @@ const mkRevealPage = (whodunnit: string) => {
   content.innerHTML = `
     <div class="center-col">
       <h2>It was ${whodunnit.split("/")[1]}!</h2>
-      <div style="display: flex">
+      <audio controls>
+        <source src=${whodunnit}>
+      </audio>
+      <div style="display: flex; margin-top: 1em">
         <div class="button" id="continueButton">
           Continue
         </div>
