@@ -1,12 +1,35 @@
-.center {
+.center-col{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+.center-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
 .button {
-  border: 1px solid blue;
-  background: aliceblue;
-  padding: 8px;
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.footer {
+  position: fixed;
+  left: 4px;
+  bottom: 4px;
+  width: 100%;
+  color: white;
 }
