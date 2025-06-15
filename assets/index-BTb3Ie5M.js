@@ -1,17 +1,20 @@
-(function(){const l=document.createElement("link").relList;if(l&&l.supports&&l.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))a(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const s of t.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&a(s)}).observe(document,{childList:!0,subtree:!0});function g(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function a(e){if(e.ep)return;e.ep=!0;const t=g(e);fetch(e.href,t)}})();const o=n=>{document.getElementById("counter").innerText=`Remaining: ${n}`},i=()=>{if(r.length===0)return null;const n=Math.floor(Math.random()*r.length);return r.splice(n,1)[0]},c=n=>{const l=document.getElementById("content");l.innerHTML=`
+(function(){const l=document.createElement("link").relList;if(l&&l.supports&&l.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))a(e);new MutationObserver(e=>{for(const n of e)if(n.type==="childList")for(const s of n.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&a(s)}).observe(document,{childList:!0,subtree:!0});function g(e){const n={};return e.integrity&&(n.integrity=e.integrity),e.referrerPolicy&&(n.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?n.credentials="include":e.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function a(e){if(e.ep)return;e.ep=!0;const n=g(e);fetch(e.href,n)}})();const o=t=>{document.getElementById("counter").innerText=`Remaining: ${t}`},i=()=>{if(r.length===0)return null;const t=Math.floor(Math.random()*r.length);return r.splice(t,1)[0]},c=t=>{const l=document.getElementById("content");l.innerHTML=`
     <div class="center-col">
       <h2>Guesseth the Bird</h2>
       <audio controls>
-        <source src=${n}>
+        <source src=${t}>
       </audio>
       <div class="button" id="revealButton" style="margin-top: 1em">
         Reveal
       </div>
     </div>
-  `,o(r.length+1),document.getElementById("revealButton").addEventListener("click",()=>p(n))},p=n=>{const l=document.getElementById("content");l.innerHTML=`
+  `,o(r.length+1),document.getElementById("revealButton").addEventListener("click",()=>p(t))},p=t=>{const l=document.getElementById("content");l.innerHTML=`
     <div class="center-col">
-      <h2>It was ${n.split("/")[1]}!</h2>
-      <div style="display: flex">
+      <h2>It was ${t.split("/")[1]}!</h2>
+      <audio controls>
+        <source src=${t}>
+      </audio>
+      <div style="display: flex; margin-top: 1em">
         <div class="button" id="continueButton">
           Continue
         </div>
@@ -20,7 +23,7 @@
         </div>
       </div>
     </div>
-  `;const g=(a=null)=>{if(a!==null){const t=Math.floor(Math.random()*r.length);r.splice(t,0,a)}const e=i();e===null?u():c(e)};document.getElementById("continueButton").addEventListener("click",()=>g()),document.getElementById("reshuffleButton").addEventListener("click",()=>g(n))},u=()=>{const n=document.getElementById("content");n.innerHTML=`
+  `;const g=(a=null)=>{if(a!==null){const n=Math.floor(Math.random()*r.length);r.splice(n,0,a)}const e=i();e===null?u():c(e)};document.getElementById("continueButton").addEventListener("click",()=>g()),document.getElementById("reshuffleButton").addEventListener("click",()=>g(t))},u=()=>{const t=document.getElementById("content");t.innerHTML=`
     <div class="center-col">
       <h2>Yippee you are done</h2>
       <div class="button" id="resetButton">
